@@ -1,0 +1,71 @@
+<!-- <detalle-cliente  [cliente]="clienteSeleccionado"
+    class="modal fade" id="exampleModal" tabindex="-1"
+ aria-labelledby="exampleModalLabel"
+ aria-hidden="true"></detalle-cliente> -->
+<detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente>
+<div class="card border-primary mb-3">
+    <div class="card-header">Clientes</div>
+    <div class="card-body text-primary">
+        <h5 class="card-title">Listado de clientes</h5>
+        <div class="my-2 text-left">
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-rounded btn-success" type="button" [routerLink] = "['/clientes/form']" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Crear Cliente</button>
+        </div>
+        <ng-template #msgBlock>
+            <div class="alert alert-info">
+                No hay registros en la base de datos
+            </div>            
+        </ng-template>
+        <table class="table table-bordered table-striped" *ngIf="clientes?.length > 0 else msgBlock">
+            <thead>
+                <th *ngIf="authService.hasRole('ROLE_USER')">Detalles</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Fecha</th>
+                <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Editar</th>
+                <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Eliminar</th>
+            </thead>
+            <tbody>
+                <tr class="" *ngFor="let cliente of clientes">
+                    <td *ngIf="authService.hasRole('ROLE_USER')"> 
+                        <!-- <button type="button" class="btn btn-primary" [routerLink]="['/clientes/detalle',cliente.id]">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button> -->
+                        <img (click)="openModal(cliente)" *ngIf="cliente?.photo" 
+                        src="http://localhost:8082/api/uploads/img/{{cliente.photo}}" 
+                        alt="user image"
+                        style="width: 80px;cursor: pointer;height: 80px;border-radius: 50%;object-fit: cover;">
+                        <img (click)="openModal(cliente)" *ngIf="!cliente?.photo" 
+                        src="http://localhost:8082/images/no_photo.png" 
+                        alt="default user image"
+                        style="cursor: pointer;width: 80px;height: 80px;border-radius: 50%;object-fit: cover;">
+                        <!-- <button type="button" class="btn btn-primary" (click)="openModal(cliente)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button> -->
+                    </td>
+                    <td *ngIf="!authService.hasRole('ROLE_USER')">
+                        <img *ngIf="cliente?.photo" 
+                        src="http://localhost:8082/api/uploads/img/{{cliente.photo}}" 
+                        alt="user image"
+                        style="width: 80px;height: 80px;border-radius: 50%;object-fit: cover;">
+                        <img *ngIf="!cliente?.photo" 
+                        src="http://localhost:8082/images/no_photo.png" 
+                        alt="default user image"
+                        style="width: 80px;height: 80px;border-radius: 50%;object-fit: cover;">
+                    </td>
+                    <td >{{ cliente.nombre }}</td>
+                    <td>{{ cliente.apellido | uppercase}}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">
+                        <button type="button" class="btn btn-primary" [routerLink]="['/clientes/form',cliente.id]" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button>
+                    </td>                         
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">
+                        <button type="button" class="btn btn-danger" (click)="delete(cliente)" ><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <paginator-nav *ngIf="paginator" [paginator] = "paginator"></paginator-nav>
+    </div>
+</div>
