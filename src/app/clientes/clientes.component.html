@@ -18,8 +18,9 @@
                     </div>            
                 </ng-template>
                 <table class="table table-striped" *ngIf="clientes?.length > 0 else msgBlock">
-                    <thead>
+                    <thead class="text-center">
                         <th *ngIf="authService.hasRole('ROLE_USER')">Detalles</th>
+                        <th *ngIf="!authService.hasRole('ROLE_USER')">#</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
@@ -27,7 +28,7 @@
                         <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Editar</th>
                         <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Eliminar</th>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         <tr *ngFor="let cliente of clientes">
                             <td *ngIf="authService.hasRole('ROLE_USER')"> 
                                 <!-- <button type="button" class="btn btn-primary" [routerLink]="['/clientes/detalle',cliente.id]">
