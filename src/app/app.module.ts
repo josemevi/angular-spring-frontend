@@ -3,7 +3,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 import { ClientesService } from "./clientes/clientes.service";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 //To import global locale to format basic info suach a dates in a language
 import { registerLocaleData } from "@angular/common";
@@ -26,7 +26,10 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { LoginComponent } from './usuarios/login.component';
 
 import { AuthGuard } from "./usuarios/guards/auth.guard";
-import  {RoleGuard } from "./usuarios/guards/role.guard";
+import { RoleGuard } from "./usuarios/guards/role.guard";
+
+import { TokenInterceptor } from './usuarios/interceptors/token.interceptor'
+import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor'
 
 registerLocaleData(localES, 'es');
 
@@ -62,7 +65,10 @@ const routes: Routes = [
     MatDatepickerModule,MatMomentDateModule
   ],
   //Used to change the locale variable default to all components
-  providers: [ClientesService, {provide: LOCALE_ID, useValue: 'es_ES'}],
+  providers: [ClientesService, 
+  {provide: LOCALE_ID, useValue: 'es_ES'},
+  {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
