@@ -19,5 +19,36 @@
             <li class="list-group-item">Descripción: {{factura.description}}</li>
             <li class="list-group-item">Fecha: {{factura.createAt}}</li>
         </ul>
+
+        <table class="table table-striped table-hover-my-3">
+            <thead>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of factura.items">
+                    <td>{{item.producto.nombre}}</td>
+                    <td>{{item.producto.precio}} €</td>
+                    <td>{{item.cantidad}}</td>
+                    <td>{{item.amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h5 class="float-end">
+            <span class="badge bg-secondary">Total:
+                <i class="fa fa-money" aria-hidden="true"></i>
+                {{factura.total}} €
+            </span>
+        </h5>
+        <div class="card border-info mb-4" style="max-width: 300px;">
+            <div class="card-header bg-info">Observaciones</div>
+            <div class="card-body">
+                <p *ngIf="factura.observation">{{factura.observation}}</p>
+                <p *ngIf="!factura.observation">Sin observaciones</p>
+            </div>
+   
+        </div>
     </div>
 </div>
