@@ -30,7 +30,8 @@
                     </thead>
                     <tbody class="text-center">
                         <tr *ngFor="let cliente of clientes">
-                            <td *ngIf="authService.hasRole('ROLE_USER')"> 
+                            <!-- <td *ngIf="authService.hasRole('ROLE_USER')">  -->
+                            <td> 
                                 <!-- <button type="button" class="btn btn-primary" [routerLink]="['/clientes/detalle',cliente.id]">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </button> -->
@@ -46,7 +47,7 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </button> -->
                             </td>
-                            <td *ngIf="!authService.hasRole('ROLE_USER')">
+                            <!-- <td *ngIf="!authService.hasRole('ROLE_USER')">
                                 <img *ngIf="cliente?.photo" 
                                 src="http://localhost:8082/api/uploads/img/{{cliente.photo}}" 
                                 alt="user image"
@@ -55,7 +56,7 @@
                                 src="http://localhost:8082/images/no_photo.png" 
                                 alt="default user image"
                                 style="width: 80px;height: 80px;border-radius: 50%;object-fit: cover;">
-                            </td>
+                            </td> -->
                             <td >{{ cliente.nombre }}</td>
                             <td>{{ cliente.apellido | uppercase}}</td>
                             <td>{{ cliente.email }}</td>
