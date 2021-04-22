@@ -25,6 +25,7 @@
                         <th>Apellido</th>
                         <th>Email</th>
                         <th>Fecha</th>
+                        <th>Factura</th>
                         <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Editar</th>
                         <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">Eliminar</th>
                     </thead>
@@ -61,11 +62,14 @@
                             <td>{{ cliente.apellido | uppercase}}</td>
                             <td>{{ cliente.email }}</td>
                             <td>{{ cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>
+                            <td>
+                                <button class="btn btn-rounded btn-success btn-sm" type="button" [routerLink]="['/facturas/form',cliente.id]" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Crear Factura</button>
+                            </td>
                             <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">
-                                <button type="button" class="btn btn-primary" [routerLink]="['/clientes/form',cliente.id]" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button>
+                                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/clientes/form',cliente.id]" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button>
                             </td>                         
                             <td *ngIf="authService.hasRole('ROLE_ADMIN')" class="text-center">
-                                <button type="button" class="btn btn-danger" (click)="delete(cliente)" ><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</button>
+                                <button type="button" class="btn btn-danger btn-sm" (click)="delete(cliente)" ><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</button>
                             </td>
                         </tr>
                     </tbody>

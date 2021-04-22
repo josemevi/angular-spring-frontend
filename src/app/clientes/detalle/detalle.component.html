@@ -85,6 +85,9 @@
                                 class="img-thumbnail rounded">
                             </div>
                         </div>
+                        <div class="row my-2">
+                            <button class="btn btn-rounded btn-success btn-sm" type="button" [routerLink]="['/facturas/form',cliente.id]" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Crear Factura</button>
+                        </div>
                         <div class="row">
                             <div class="alert alert-info my-4 text-center" *ngIf = "!cliente.facturas.length">
                                 No existen facturas registradas de {{cliente.nombre}} {{cliente.apellido}}
