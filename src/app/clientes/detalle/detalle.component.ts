@@ -7,21 +7,39 @@ import { ClientesService } from '../clientes.service';
 import { ModalService } from "./modal.service";
 import { AuthService } from "../../usuarios/auth.service";
 
+import { FacturaService } from "../../facturas/services/factura.service";
+import { Factura } from "../../facturas/models/factura";
+
 @Component({
   selector: 'detalle-cliente',
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.css']
 })
 export class DetalleComponent implements OnInit { 
+
   @Input() cliente: Cliente;
+
   titulo: string = "Detalle del cliente"
+
   photo: File;
+
   imgInput: string;
+
   progress: number = 0;
+
+  swalWithBootstrapButtons: any = Swal.mixin({
+    customClass: {
+      confirmButton: ' btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
   constructor(private clientesService: ClientesService,
     //private activatedRoute: ActivatedRoute,
     public modalService: ModalService,
-    public authService: AuthService) { }
+    public authService: AuthService,
+    private facturaService: FacturaService) { }
 
   ngOnInit(): void {
     // this.activatedRoute.paramMap.subscribe(params => {
@@ -65,11 +83,39 @@ export class DetalleComponent implements OnInit {
     }
   }
 
-  close(){
+  close(): void{
     this.modalService.closeModal();
     this.photo = null;
     this.progress = 0;
     this.imgInput = "";
+  }
+
+  delete(factura: Factura): void{
+    this.swalWithBootstrapButtons.fire({
+      title: '¿Estás Seguro?',
+      text: `¿Estás seguro de eliminar la factura ${factura.description}?`,
+      icon: 'warning',      
+      showCancelButton: true,
+      confirmButtonText: '<i class="fa fa-check-square-o" aria-hidden="true"></i> Eliminar',
+      cancelButtonText: '<i class="fa fa-times-circle-o" aria-hidden="true"></i> Cancelar',
+      reverseButtons: false,
+      focusCancel: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.facturaService.delete(factura.id)
+        .subscribe(res => {
+          this.cliente.facturas = this.cliente.facturas.filter(fac=> fac !== factura);
+          this.swalWithBootstrapButtons.fire(
+            'Factura Eliminado',
+            `Factura "${factura.description}" eliminada con éxito.`,
+            'success'
+          )
+        })  
+      } else (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      )
+    })
   }
 
 }

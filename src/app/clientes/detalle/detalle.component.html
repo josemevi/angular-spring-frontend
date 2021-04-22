@@ -96,6 +96,7 @@
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Detalle</th>
+                                    <th>Eliminar</th>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let factura of cliente.facturas">
@@ -108,6 +109,9 @@
                                             [routerLink]="['/facturas', factura.id]">
                                                 <i class="fa fa-eye" aria-hidden="true"></i> Ver
                                             </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" (click)="delete(factura)" ><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar</button>
                                         </td>
                                     </tr>
                                 </tbody>
