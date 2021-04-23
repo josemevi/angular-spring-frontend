@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { ClientesService } from "./clientes/clientes.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 //To import global locale to format basic info suach a dates in a language
 import { registerLocaleData } from "@angular/common";
 import localES from "@angular/common/locales/es";
@@ -20,9 +20,16 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { DetalleComponent } from './clientes/detalle/detalle.component';
 
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+//import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+
+
 import { LoginComponent } from './usuarios/login.component';
 
 import { AuthGuard } from "./usuarios/guards/auth.guard";
@@ -67,8 +74,9 @@ const routes: Routes = [
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    NoopAnimationsModule,
-    MatDatepickerModule,MatMomentDateModule
+    //NoopAnimationsModule,
+    BrowserAnimationsModule,MatDatepickerModule,MatMomentDateModule, //Material date picker
+    ReactiveFormsModule,MatAutocompleteModule,MatInputModule,MatFormFieldModule //material autocomplete
   ],
   //Used to change the locale variable default to all components
   providers: [ClientesService, 
