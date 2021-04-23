@@ -46,9 +46,9 @@
                                     aria-label="Añadir un Producto"
                                     matInput [formControl]="autoCompletecontrol"
                                     [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="showName">
                                 <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto"> <!--Async pipe because we're iterating a observavle list-->
-                                    {{producto}}
+                                    {{producto.nombre}}
                                 </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
