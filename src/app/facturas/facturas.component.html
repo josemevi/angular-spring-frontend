@@ -44,9 +44,9 @@
                                 <input type="text"
                                     placeholder="Añadir Producto"
                                     aria-label="Añadir un Producto"
-                                    matInput [formControl]="autoCompletecontrol"
+                                    matInput [formControl]="autoCompleteControl"
                                     [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="showName">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="showName" (optionSelected)="selectProducto($event)">
                                 <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto"> <!--Async pipe because we're iterating a observavle list-->
                                     {{producto.nombre}}
                                 </mat-option>
@@ -54,6 +54,29 @@
                             </mat-form-field>
                         </div>
                     </div>
+
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of factura.items">
+                                <td>{{ item.producto.nombre }}</td>
+                                <td>{{ item.producto.precio }}€</td>
+                                <td>
+                                    <input class="form-control" style="width: 20%;"
+                                     type="number" value="{{item.cantidad}}"
+                                     (change)="actualizarCantidad(item.producto.id, $event)">
+                                </td>
+                                <td>{{ item.calcularImporte() }}€</td>
+                            </tr>
+                        </tbody>
+                    </table>
         
                     <div class="form-group row my-2 justify-content-center">
                        
