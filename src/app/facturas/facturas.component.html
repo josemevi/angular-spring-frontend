@@ -54,14 +54,17 @@
                             </mat-form-field>
                         </div>
                     </div>
-
-                    <table class="table table-striped table-sm">
+                    <div class="alert alert-info my-4 text-center" *ngIf = "factura.items.length == 0">
+                        No hay productos registrados en la factura. Debe agregar al menos uno para guardar;
+                    </div>
+                    <table class="table table-striped table-sm" *ngIf = "factura.items.length > 0">
                         <thead>
                             <tr>
                                 <th>Producto</th>
                                 <th>Precio</th>
                                 <th>Cantidad</th>
                                 <th>Total</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,9 +77,21 @@
                                      (change)="actualizarCantidad(item.producto.id, $event)">
                                 </td>
                                 <td>{{ item.calcularImporte() }}€</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                     (click)="deleteItem(item.producto.id)">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+                    <h5 class="float-end" *ngIf = "factura.items.length > 0">
+                        <span class="badge bg-secondary">Total:
+                            <i class="fa fa-money" aria-hidden="true"></i>
+                            {{factura.calcularGranTotal()}} €
+                        </span>
+                    </h5>
         
                     <div class="form-group row my-2 justify-content-center">
                        
