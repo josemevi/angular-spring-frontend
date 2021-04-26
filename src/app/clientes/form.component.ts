@@ -22,7 +22,7 @@ import swal from "sweetalert2";
   //   email : "",
   //   createAt : ""
   // };
-  cliente: Cliente=new Cliente();
+  public cliente: Cliente=new Cliente();
   errores: string[];
   regiones: Region[];
 
