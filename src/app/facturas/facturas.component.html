@@ -9,7 +9,7 @@
                     </a>
                 </h4>
         
-                <form>
+                <form #facturaForm="ngForm">
         
                     <div class="form-group row my-2 justify-content-center" *ngIf="factura.cliente">
                         <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
@@ -24,7 +24,10 @@
                         <label for="description" class="col-sm-2 col-form-label">Descripción</label>
                         <div class="col-sm-6">
                             <input type="text" name="description" class="form-control" [(ngModel)]="factura.description" 
-                            [ngModelOptions]="{standalone: true}">
+                             required #description="ngModel">
+                            <div class="alert alert-danger" *ngIf="description.invalid && description.touched || description.invalid && facturaForm.submitted">
+                                La descripción es requerida
+                            </div>
                         </div>
                     </div>
         
@@ -52,6 +55,9 @@
                                 </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
+                            <div class="alert alert-danger" *ngIf="autoCompleteControl.invalid || autoCompleteControl.invalid && facturaForm.submitted">
+                                Debe agregar al menos un producto
+                            </div>
                         </div>
                     </div>
                     <div class="alert alert-info my-4 text-center" *ngIf = "factura.items.length == 0">
@@ -96,8 +102,12 @@
                     <div class="form-group row my-2 justify-content-center">
                        
                         <div class="col-sm-6 offset-sm-4">
+                            <!-- validation form with only html -->
+                            <!-- <input type="submit" value="Crear Factura" class="btn btn-primary"
+                            (click)="create()" [disabled] = " "> -->
+                            <!-- validation form with ts -->
                             <input type="submit" value="Crear Factura" class="btn btn-primary"
-                            (click)="create()">
+                            (click)="create(facturaForm)">
                         </div>
                     </div>
         
