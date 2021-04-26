@@ -66,6 +66,7 @@ import swal from "sweetalert2";
   };
 
   update(): void {
+    this.cliente.facturas = null;
     this.clienteService.update(this.cliente) 
     .subscribe(res=> {
         swal.fire(`Cliente "${res.cliente.nombre}"actualizado`, res.mensaje, 'success');
